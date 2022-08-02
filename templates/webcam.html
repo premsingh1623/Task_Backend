@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/webcam.css') }}">
+    <title>Webcam | Image Upload</title>
+</head>
+<body>
+    <div>
+        <header>Webcam Capture</header>
+        <div class="capture">
+            <video id="video" autoplay muted></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="capture-button">
+        <button onclick="takePhoto()">Take Picture</button>
+        <button onclick="uploadPhoto()">Upload Picture</button>
+        </div>
+      </div>
+
+      <script>
+        const video = document.querySelector('#video')
+        const canvas = document.querySelector('#canvas')
+
+        const constraints = {
+            audio: false,
+            video: {
+                width: 420,
+                height: 360
+            }
+        }
+
+        navigator
+            .mediaDevices
+            .getUserMedia(constraints).then(stream => {
+                window.stream = stream;
+                video.srcObject = stream;
+            })
+            .catch(err => console.log(err))
+
+
+            const takePhoto = () => {
+                canvas.width = video.videoWidth
+                canvas.height = video.videoHeight
+                const ctx = canvas.getContext('2d')
+                ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+            }
+
+            const uploadPhoto = () => {
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], `${Date.now()}.jpg`);
+                    let formData = new FormData();
+                    formData.append('file', file);
+
+                    try {
+                        const res = await fetch('/upload', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Authorization': localStorage.getItem('token')
+                            }
+                        })
+
+                        if(res.ok) {
+                            const data = await res.json()
+                            window.location.href = `/show/${data.filename}`
+                        } else {
+                            if(res.status === 429) {
+                                alert('API Request limit reached, please try again later')
+                            }
+                        }
+                    } catch (err) {
+                        if(err.message === 'Failed to fetch') {
+                            alert('API Request limit reached, please try again later')
+                        } else console.log(err)
+                    }
+                }, 'image/jpeg')
+            }
+      </script>
+</body>
+</html>

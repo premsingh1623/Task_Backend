@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/upload-image.css') }}">
+    <title>Upload | Image Upload</title>
+</head>
+<body>
+    <div class="container">
+        <header>Image Uploader</header>
+        <div class="upload">
+            <input type="file" id="file" name="file" accept="image/*">
+            <button onclick="upload()">Upload</button>
+            <button onclick="webcam()">Open Webcam</button>
+        </div>
+    </div>
+
+    <script>
+
+        localStorage.setItem("token", '{{ token }}')
+        
+        function webcam() {
+            window.location.href = `/webcam`   
+        }
+        async function upload() {
+            const file = document.getElementById('file').files[0];
+
+            if(!file) return alert('Please select a file to upload')
+
+            let formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': '{{ token }}'
+                    }
+                })
+
+                if(res.ok) {
+                    const data = await res.json()
+                    window.location.href = `/show/${data.filename}`
+                } else {
+                    if(res.status === 429) {
+                        alert('API Request limit reached, please try again later')
+                    }
+                }
+            } catch (err) {
+                if(err.message === 'Failed to fetch') {
+                    alert('API Request limit reached, please try again later')
+                } else console.log(err)
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+body{
+    height:100vh;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient( to top, rgb(248, 4, 126) 0%, rgb(250, 198, 247) 100% );
+}
+header{
+    font-family: "Poppins", sans-serif;
+    pointer-events: none;
+    font-size: 25px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#video{
+    height:100%;
+    width:420px;
+}
+.capture{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.capture-button{
+    margin: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.capture-button button{
+    border: none;
+    box-shadow: 3px 3px 5px black;
+    border-radius: 5px;
+    color: rgb(248, 4, 126);
+    cursor: pointer;
+    height: 2rem;
+    width: 8rem;
+}
+
+
+@media screen and (max-width: 857px) {
+    body {
+        height: 100%;
+    }
+    #video{
+        height:100%;
+        width:100%;
+    }
+    .capture{
+        flex-direction: column;
+    }
+    .capture video{
+        margin-bottom:2rem;
+    }
+  }

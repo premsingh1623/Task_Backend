@@ -1,0 +1,61 @@
+body{
+    height:100vh;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient( to top, rgb(248, 4, 126) 0%, rgb(250, 198, 247) 100% );
+}
+::selection {
+    color: white;
+    background: rgb(248, 4, 126);
+}
+
+.container{
+    background: #fff;
+    margin: 0.5rem;
+    padding: 2rem;
+    border-radius: 5px;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0px 0px 25px black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container header{
+    font-family: "Poppins", sans-serif;
+    pointer-events: none;
+    font-size: 25px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.upload{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: auto;
+    padding: 5vh 0 0 0;
+}
+.upload > input{
+    padding: 1vw;
+    margin: 2rem;
+}
+button{
+    background-color: #f961b8;
+    border: none;
+    user-select: none;
+    box-shadow: 3px 3px 5px black;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin: 1rem 0;
+    transition: all 0.4s ease;
+    height: 40px;
+}
+
+@media screen and (max-width: 857px) {
+    .container{
+        width: 100%;
+    }
+  }

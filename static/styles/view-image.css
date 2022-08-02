@@ -1,0 +1,62 @@
+body{
+    height:100vh;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient( to top, rgb(248, 4, 126) 0%, rgb(250, 198, 247) 100% );
+}
+::selection {
+    color: white;
+    background: rgb(248, 4, 126);
+}
+
+.image-container {
+    background: #fff;
+    margin: 0.5rem;
+    padding: 2rem;
+    border-radius: 5px;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0px 0px 25px black;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-container header{
+    font-family: "Poppins", sans-serif;
+    pointer-events: none;
+    font-size: 25px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.image{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    padding: 5vh 0 0 0;
+}
+.image > img{
+    height:400px;
+    width:500px;
+    user-select: none;
+}
+strong{
+    border: none;
+    text-align: center;
+    height:25px;
+    margin:2vh 0 0 0;
+    padding: 1vh 0 0 0;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 857px) {
+    .image > img{
+        height: 100%;
+        width: 100%;
+    }
+  }
